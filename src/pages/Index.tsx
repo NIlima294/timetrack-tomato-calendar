@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import TaskList, { Task } from '@/components/TaskList';
 import PomodoroTimer from '@/components/PomodoroTimer';
 import TaskCalendar from '@/components/TaskCalendar';
 
 const Index = () => {
-  const [tasks] = useState<Task[]>([
+  const [tasks, setTasks] = useState<Task[]>([
     {
       id: '1',
       title: 'Complete project proposal',
@@ -29,12 +28,15 @@ const Index = () => {
     },
   ]);
 
-  const [selectedDate, setSelectedDate] = useState<Date>();
-
   const handleToggleTask = (taskId: string) => {
-    // This will be implemented with database integration
-    console.log('Toggle task:', taskId);
+    setTasks(tasks.map(task =>
+      task.id === taskId
+        ? { ...task, completed: !task.completed }
+        : task
+    ));
   };
+
+  const [selectedDate, setSelectedDate] = useState<Date>();
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
